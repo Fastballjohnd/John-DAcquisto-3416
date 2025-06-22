@@ -1,0 +1,88 @@
+import random
+
+def transition_model(corpus, page, damping_factor):
+    """
+    Returns a probability distribution over which page a random surfer would visit next.
+    """
+    prob_dist = {}
+    all_pages = list(corpus.keys())
+    links = corpus.get(page, set())
+
+    # If page has no outgoing links, treat it as linking to all pages
+    if not links:
+        links = set(all_pages)
+
+    num_links = len(links)
+    num_pages = len(all_pages)
+
+    # Probability of choosing a linked page (damping_factor)
+    for linked_page in links:
+        prob_dist[linked_page] = damping_factor / num_links
+
+    # Probability of choosing any page randomly (1 - damping_factor)
+    for p in all_pages:
+        prob_dist[p] = prob_dist.get(p, 0) + (1 - damping_factor) / num_pages
+
+    return prob_dist
+2. sample_pagerank
+This function estimates PageRank using random sampling.
+
+python
+def sample_pagerank(corpus, damping_factor, n):
+    """
+    Uses a random surfer model to estimate PageRank values.
+    """
+    all_pages = list(corpus.keys())
+    page_rank = {page: 0 for page in all_pages}
+
+    # Start at a random page
+    current_page = random.choice(all_pages)
+
+    # Perform `n` samples
+    for _ in range(n):
+        page_rank[current_page] += 1
+        probabilities = transition_model(corpus, current_page, damping_factor)
+        current_page = random.choices(list(probabilities.keys()), weights=probabilities.values())[0]
+
+    # Normalize PageRank values
+    total_samples = sum(page_rank.values())
+    return {page: rank / total_samples for page, rank in page_rank.items()}
+3. iterate_pagerank
+This function implements the iterative PageRank formula until convergence.
+
+python
+def iterate_pagerank(corpus, damping_factor, tolerance=0.001):
+    """
+    Computes PageRank values iteratively until no value changes by more than `tolerance`.
+    """
+    num_pages = len(corpus)
+    ranks = {page: 1 / num_pages for page in corpus}  # Initial rank distribution
+
+    while True:
+        new_ranks = {}
+        for page in corpus:
+            rank_sum = 0
+
+            # Calculate the sum of incoming PageRanks from linking pages
+            for linking_page in corpus:
+                links = corpus[linking_page]
+                if not links:
+                    links = corpus.keys()  # Treat as linking to all pages
+
+                if page in links:
+                    rank_sum += ranks[linking_page] / len(links)
+
+            # Apply the PageRank formula
+            new_ranks[page] = (1 - damping_factor) / num_pages + damping_factor * rank_sum
+
+        # Check for convergence
+        if all(abs(new_ranks[page] - ranks[page]) < tolerance for page in corpus):
+            return new_ranks
+
+        ranks = new_ranks
+How It Works:
+transition_model: Generates probability distributions for the next page visit.
+
+sample_pagerank: Uses random surfer simulations to estimate PageRank.
+
+iterate_pagerank: Applies the iterative approach to compute exact PageRank values.
