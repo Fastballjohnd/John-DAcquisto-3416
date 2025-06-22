@@ -1,0 +1,35 @@
+import nltk
+from nltk.tokenize import word_tokenize
+
+def preprocess(sentence):
+    """Tokenize and preprocess sentence."""
+    words = word_tokenize(sentence.lower())  # Convert to lowercase and tokenize
+    return [word for word in words if any(c.isalpha() for c in word)]
+    
+    Content Fix:
+
+NONTERMINALS = """
+S -> NP VP | S PP
+NP -> Det N | Det Adj N | NP PP
+VP -> V NP | V PP | VP Adv
+PP -> P NP
+Det -> 'the' | 'a' | 'an'
+N -> 'dog' | 'cat' | 'home' | 'park' | 'boy' | 'girl'
+Adj -> 'big' | 'small' | 'happy' | 'sad'
+V -> 'chased' | 'saw' | 'loved' | 'walked'
+Adv -> 'quickly' | 'slowly'
+P -> 'in' | 'on' | 'with' | 'by'
+"""
+NP Chunk Function
+from nltk.tree import Tree
+
+def np_chunk(tree):
+    """Extract noun phrase (NP) chunks that do not contain nested NPs."""
+    return [subtree for subtree in tree.subtrees(lambda t: t.label() == "NP" and not any(child.label() == "NP" for child in subtree))]
+    
+Final Thoughts
+preprocess ensures clean tokenization and filtering.
+
+NONTERMINALS provides rich sentence structure handling.
+
+np_chunk extracts minimal noun phrases for parsing efficiency.
