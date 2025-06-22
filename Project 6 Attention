@@ -1,0 +1,48 @@
+1. get_mask_token_index
+Retrieve the index of the mask token in a tokenized input sequence.
+
+def get_mask_token_index(mask_token_id, inputs):
+    """Return the index of the mask token in the input sequence."""
+    try:
+        return inputs.input_ids.index(mask_token_id)
+    except ValueError:
+        return None
+        
+        2. get_color_for_attention_score
+Map an attention score (0 to 1) to an RGB grayscale color.
+
+def get_color_for_attention_score(attention_score):
+    """Convert attention score into grayscale RGB values."""
+    shade = int(round(255 * attention_score))
+    return (shade, shade, shade)
+    
+    3. visualize_attentions
+Generate diagrams for all attention heads across layers.
+
+def visualize_attentions(tokens, attentions):
+    """Generate diagrams for all attention heads across layers."""
+    num_layers = len(attentions)
+    num_heads = attentions[0].shape[2]
+
+    for layer_index in range(num_layers):
+        for head_index in range(num_heads):
+            generate_diagram(layer_index + 1, head_index + 1, tokens, attentions[layer_index][0][head_index])
+            
+            Analysis (analysis.md)
+Layer 2, Head 5: Seems to focus on noun-adjective relationships—adjectives consistently attend to the nouns they describe.
+
+Example sentences:
+
+The small cat sat on the windowsill.
+
+A bright star shone in the night sky.
+
+Layer 6, Head 3: Appears to track preposition-object relationships, where prepositions focus on the noun phrases they introduce.
+
+Example sentences:
+
+She placed the book on the table.
+
+He walked through the dense forest.
+
+This setup should allow you to run mask.py and analyze attention patterns efficiently.
