@@ -1,0 +1,100 @@
+PROBS = {
+    "gene": {
+        2: 0.01,
+        1: 0.03,
+        0: 0.96
+    },
+    "trait": {
+        2: {True: 0.65, False: 0.35},
+        1: {True: 0.56, False: 0.44},
+        0: {True: 0.01, False: 0.99}
+    },
+    "mutation": 0.01
+}
+
+def joint_probability(people, one_gene, two_genes, have_trait):
+    """
+    Compute the joint probability of a given configuration of gene copies and exhibited traits.
+    """
+    probability = 1.0
+
+    for person in people:
+        mother = people[person]['mother']
+        father = people[person]['father']
+
+        # Determine gene count
+        genes = (2 if person in two_genes else 1 if person in one_gene else 0)
+
+        # Probability of inheriting genes
+        if mother is None and father is None:
+            gene_probability = PROBS["gene"][genes]
+        else:
+            def inherit_probability(parent):
+                parent_genes = (2 if parent in two_genes else 1 if parent in one_gene else 0)
+                if parent_genes == 2:
+                    return 1 - PROBS["mutation"]
+                elif parent_genes == 1:
+                    return 0.5
+                else:
+                    return PROBS["mutation"]
+
+            mother_prob = inherit_probability(mother)
+            father_prob = inherit_probability(father)
+
+            if genes == 2:
+                gene_probability = mother_prob * father_prob
+            elif genes == 1:
+                gene_probability = mother_prob * (1 - father_prob) + father_prob * (1 - mother_prob)
+            else:
+                gene_probability = (1 - mother_prob) * (1 - father_prob)
+
+        # Trait probability
+        trait_probability = PROBS["trait"][genes][person in have_trait]
+
+        # Multiply into joint probability
+        probability *= gene_probability * trait_probability
+
+    return probability
+2. update
+This function updates the probability distributions based on the computed joint probability.
+
+python
+def update(probabilities, one_gene, two_genes, have_trait, p):
+    """
+    Add the new joint probability to existing probability distributions.
+    """
+    for person in probabilities:
+        genes = (2 if person in two_genes else 1 if person in one_gene else 0)
+        probabilities[person]["gene"][genes] += p
+        probabilities[person]["trait"][person in have_trait] += p
+3. normalize
+This function normalizes probabilities so they sum to 1.
+
+python
+def normalize(probabilities):
+    """
+    Normalize probability distributions so they sum to 1.
+    """
+    for person in probabilities:
+        for field in ["gene", "trait"]:
+            total = sum(probabilities[person][field].values())
+            for key in probabilities[person][field]:
+                probabilities[person][field][key] /= total
+How It Works
+joint_probability:
+
+Computes the probability of gene inheritance based on parent genes.
+
+Uses PROBS["gene"] when parents are unknown.
+
+Uses mutation probabilities to determine inheritance chances.
+
+Multiplies the trait probability into the final joint probability.
+
+update:
+
+Adds the computed joint probability to the corresponding gene and trait categories.
+
+normalize:
+
+Ensures all probability distributions sum to 1 while maintaining relative proportions.
