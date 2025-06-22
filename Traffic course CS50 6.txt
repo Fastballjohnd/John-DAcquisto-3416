@@ -1,0 +1,14 @@
+nltk
+Holmes sat in the red armchair
+
+        S
+   _____|______
+  NP         VP
+  |          |______
+  N          V      PP
+  |          |      |
+holmes     sat     P NP
+                   |  |_____
+                   in Det  N
+                       |    |
+                      the red armchair
