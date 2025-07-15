@@ -1,26 +1,17 @@
 from kanren import var, Relation, facts, run
 
-# Define relations for Knight and Knave
 knight = Relation()
 knave = Relation()
 
-# Puzzle 0: A says "I am both a knight and a knave." (which is a contradiction)
-facts(knave, ("A",))  # Since the statement is false, A must be a knave
+facts(knave, ("A",))
+facts(knave, ("A",))
+facts(knight, ("B",))
+facts(knave, ("A",))
+facts(knight, ("B",))
+facts(knight, ("A",))
+facts(knave, ("B",))
+facts(knight, ("C",))
 
-# Puzzle 1: A says "We are both knaves."
-facts(knave, ("A",))  # A is a knave, making his statement false
-facts(knight, ("B",))  # Since "we are both knaves" is false, B must be a knight
-
-# Puzzle 2: A says "We are the same kind."; B says "We are of different kinds."
-facts(knave, ("A",))  # Since A is lying, they must be different types
-facts(knight, ("B",))  # B tells the truth that they are different kinds
-
-# Puzzle 3: A says either "I am a knight." or "I am a knave."
-facts(knight, ("A",))  # Since C truthfully states A is a knight
-facts(knave, ("B",))   # B lies about A saying "I am a knave"
-facts(knight, ("C",))  # C tells the truth
-
-# Query results
 x = var()
 print("Knights:", run(0, x, knight(x)))
 print("Knaves:", run(0, x, knave(x)))
