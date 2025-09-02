@@ -1,20 +1,21 @@
-import copy
-
+python
 def player(board):
     """Returns the player who has the next turn (X or O)."""
     X_count = sum(row.count("X") for row in board)
     O_count = sum(row.count("O") for row in board)
     return "X" if X_count == O_count else "O"
+2. Actions Function
+Find all available moves.
 
-# Actions Function
-# Find all available moves.
-
+python
 def actions(board):
     """Returns a set of possible actions (i, j) for the given board."""
     return {(i, j) for i in range(3) for j in range(3) if board[i][j] is None}
+3. Result Function
+Return the new board after making a move.
 
-# Result Function
-# Return the new board after making a move.
+python
+import copy
 
 def result(board, action):
     """Returns a new board state after applying action, without modifying the original board."""
@@ -24,10 +25,10 @@ def result(board, action):
     new_board = copy.deepcopy(board)
     new_board[action[0]][action[1]] = player(board)
     return new_board
+4. Winner Function
+Check for a winner.
 
-# Winner Function
-# Check for a winner.
-
+python
 def winner(board):
     """Returns the winner (X or O) if there is one, else None."""
     for i in range(3):
@@ -42,25 +43,25 @@ def winner(board):
         return board[0][2]  # Diagonal win
 
     return None
+5. Terminal Function
+Check if the game is over.
 
-# Terminal Function
-# Check if the game is over.
-
+python
 def terminal(board):
     """Returns True if the game is over, else False."""
     return winner(board) is not None or all(cell is not None for row in board for cell in row)
+6. Utility Function
+Assign values to terminal states.
 
-# Utility Function
-# Assign values to terminal states.
-
+python
 def utility(board):
     """Returns the utility value: 1 if X wins, -1 if O wins, 0 if tie."""
     game_winner = winner(board)
     return 1 if game_winner == "X" else -1 if game_winner == "O" else 0
+7. Minimax Function
+Find the optimal move.
 
-# Minimax Function
-# Find the optimal move.
-
+python
 def minimax(board):
     """Returns the optimal move (i, j) using Minimax algorithm."""
     if terminal(board):

@@ -1,19 +1,20 @@
-rom kanren import var, Relation, facts, run
+from kanren import var, Relation, facts, run
 
 knight = Relation()
-kn Relation()
+knave = Relation()
 
-factsave ("A",)) # Since the statement is false, A must be knave.
+facts(knave, ("A",))  # Since the statement is false, A must be knave.
 
-facts(kn, ("A",)) A is a kn, making his statement false.
-facts(knight, ("B",)) # "we are both knaves" is false, B must be a knight.
+facts(knave, ("A",))  # A is a knave, making his statement false.
+facts(knight, ("B",))  # "we are both knaves" is false, B must be a knight.
 
-facts(knave, ("A",)) # Since A is lying, they be different types.
-facts(knight, ("B",)) # B tells the truth that they are different kinds.
+facts(knave, ("A",))  # Since A is lying, they be different types.
+facts(knight, ("B",))  # B tells the truth that they are different kinds.
 
-facts(knight, ("A",)) # Since C truthfully states A is a knight.
-facts(knave, ("B",)) # B lies about A saying, "I am a kn."
-facts(knight, ("C",)) # C tells the truth.
+facts(knight, ("A",))  # Since C truthfully states A is a knight.
+facts(knave, ("B",))  # B lies about A saying, "I am a knave."
+facts(knight, ("C",))  # C tells the truth.
 
 x = var()
-print("ights:", run(0, x, knight(xprint("Kn:", run(0, x, knave(x)))
+print("Knights:", run(0, x, knight(x)))
+print("Knaves:", run(0, x, knave(x)))
