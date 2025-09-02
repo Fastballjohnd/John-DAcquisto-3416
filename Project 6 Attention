@@ -28,21 +28,4 @@ def visualize_attentions(tokens, attentions):
         for head_index in range(num_heads):
             generate_diagram(layer_index + 1, head_index + 1, tokens, attentions[layer_index][0][head_index])
             
-            Analysis (analysis.md)
-Layer 2, Head 5: Seems to focus on noun-adjective relationships—adjectives consistently attend to the nouns they describe.
-
-Example sentences:
-
-The small cat sat on the windowsill.
-
-A bright star shone in the night sky.
-
-Layer 6, Head 3: Appears to track preposition-object relationships, where prepositions focus on the noun phrases they introduce.
-
-Example sentences:
-
-She placed the book on the table.
-
-He walked through the dense forest.
-
-This setup should allow you to run mask.py and analyze attention patterns efficiently.
+            
