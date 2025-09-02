@@ -54,9 +54,10 @@ def evaluate(labels, predictions):
     specificity = true_negative / (true_negative + false_positive)
 
     return sensitivity, specificity
-Summary:
-load_data(filename) properly processes the CSV file, converting categorical values like Month and VisitorType into integers.
 
-train_model(evidence, labels) trains a k-NN classifier with k=1 using scikit-learn.
-
-evaluate(labels, predictions) computes sensitivity and specificity, ensuring proper performance evaluation.
+# Summary:
+# load_data(filename) properly processes the CSV file, converting categorical values like Month and VisitorType into integers.
+# 
+# train_model(evidence, labels) trains a k-NN classifier with k=1 using scikit-learn.
+# 
+# evaluate(labels, predictions) computes sensitivity and specificity, ensuring proper performance evaluation.

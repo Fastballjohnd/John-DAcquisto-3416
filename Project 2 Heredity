@@ -55,10 +55,10 @@ def joint_probability(people, one_gene, two_genes, have_trait):
         probability *= gene_probability * trait_probability
 
     return probability
-2. update
-This function updates the probability distributions based on the computed joint probability.
 
-python
+# update
+# This function updates the probability distributions based on the computed joint probability.
+
 def update(probabilities, one_gene, two_genes, have_trait, p):
     """
     Add the new joint probability to existing probability distributions.
@@ -67,10 +67,10 @@ def update(probabilities, one_gene, two_genes, have_trait, p):
         genes = (2 if person in two_genes else 1 if person in one_gene else 0)
         probabilities[person]["gene"][genes] += p
         probabilities[person]["trait"][person in have_trait] += p
-3. normalize
-This function normalizes probabilities so they sum to 1.
 
-python
+# normalize
+# This function normalizes probabilities so they sum to 1.
+
 def normalize(probabilities):
     """
     Normalize probability distributions so they sum to 1.
@@ -80,21 +80,22 @@ def normalize(probabilities):
             total = sum(probabilities[person][field].values())
             for key in probabilities[person][field]:
                 probabilities[person][field][key] /= total
-How It Works
-joint_probability:
 
-Computes the probability of gene inheritance based on parent genes.
-
-Uses PROBS["gene"] when parents are unknown.
-
-Uses mutation probabilities to determine inheritance chances.
-
-Multiplies the trait probability into the final joint probability.
-
-update:
-
-Adds the computed joint probability to the corresponding gene and trait categories.
-
-normalize:
-
-Ensures all probability distributions sum to 1 while maintaining relative proportions.
+# How It Works
+# joint_probability:
+# 
+# Computes the probability of gene inheritance based on parent genes.
+# 
+# Uses PROBS["gene"] when parents are unknown.
+# 
+# Uses mutation probabilities to determine inheritance chances.
+# 
+# Multiplies the trait probability into the final joint probability.
+# 
+# update:
+# 
+# Adds the computed joint probability to the corresponding gene and trait categories.
+# 
+# normalize:
+# 
+# Ensures all probability distributions sum to 1 while maintaining relative proportions.

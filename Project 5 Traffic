@@ -40,21 +40,21 @@ def get_model():
     model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
     return model
 
-Explanation:
-load_data(data_dir) reads and resizes all images while correctly assigning labels from the directory structure.
-
-get_model() creates a CNN with increasing filter depths, dropout for regularization, and softmax output for classification.
-
-Make sure to document your experimentation process in README.md, including insights into different architectures, dropout impact, and performance trade-offs.
-
-A final test accuracy of 95.35% is quite solid for traffic sign recognition.
-
-A few areas for further refinement:
-
-Data Augmentation: Improve generalization by applying transformations like rotation, brightness adjustments, and noise to training images.
-
-More Convolutional Layers: Adding depth may enhance feature extraction, especially for complex signs.
-
-Learning Rate Scheduling: Fine-tune training by decreasing learning rate over epochs to stabilize later-stage learning.
-
-Batch Normalization: Helps speed up convergence and improve performance stability.
+# Explanation:
+# load_data(data_dir) reads and resizes all images while correctly assigning labels from the directory structure.
+# 
+# get_model() creates a CNN with increasing filter depths, dropout for regularization, and softmax output for classification.
+# 
+# Make sure to document your experimentation process in README.md, including insights into different architectures, dropout impact, and performance trade-offs.
+# 
+# A final test accuracy of 95.35% is quite solid for traffic sign recognition.
+# 
+# A few areas for further refinement:
+# 
+# Data Augmentation: Improve generalization by applying transformations like rotation, brightness adjustments, and noise to training images.
+# 
+# More Convolutional Layers: Adding depth may enhance feature extraction, especially for complex signs.
+# 
+# Learning Rate Scheduling: Fine-tune training by decreasing learning rate over epochs to stabilize later-stage learning.
+# 
+# Batch Normalization: Helps speed up convergence and improve performance stability.

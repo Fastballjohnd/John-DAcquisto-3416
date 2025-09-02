@@ -24,10 +24,10 @@ def transition_model(corpus, page, damping_factor):
         prob_dist[p] = prob_dist.get(p, 0) + (1 - damping_factor) / num_pages
 
     return prob_dist
-2. sample_pagerank
-This function estimates PageRank using random sampling.
 
-python
+# sample_pagerank
+# This function estimates PageRank using random sampling.
+
 def sample_pagerank(corpus, damping_factor, n):
     """
     Uses a random surfer model to estimate PageRank values.
@@ -47,10 +47,10 @@ def sample_pagerank(corpus, damping_factor, n):
     # Normalize PageRank values
     total_samples = sum(page_rank.values())
     return {page: rank / total_samples for page, rank in page_rank.items()}
-3. iterate_pagerank
-This function implements the iterative PageRank formula until convergence.
 
-python
+# iterate_pagerank
+# This function implements the iterative PageRank formula until convergence.
+
 def iterate_pagerank(corpus, damping_factor, tolerance=0.001):
     """
     Computes PageRank values iteratively until no value changes by more than `tolerance`.
@@ -80,9 +80,10 @@ def iterate_pagerank(corpus, damping_factor, tolerance=0.001):
             return new_ranks
 
         ranks = new_ranks
-How It Works:
-transition_model: Generates probability distributions for the next page visit.
 
-sample_pagerank: Uses random surfer simulations to estimate PageRank.
-
-iterate_pagerank: Applies the iterative approach to compute exact PageRank values.
+# How It Works:
+# transition_model: Generates probability distributions for the next page visit.
+# 
+# sample_pagerank: Uses random surfer simulations to estimate PageRank.
+# 
+# iterate_pagerank: Applies the iterative approach to compute exact PageRank values.

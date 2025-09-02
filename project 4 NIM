@@ -27,11 +27,12 @@ class NimAI:
             return random.choice(possible_actions)
 
         return max(possible_actions, key=lambda action: self.get_q_value(state, action), default=None)
-Explanation:
-get_q_value(state, action) retrieves the Q-value for a given (state, action) pair, defaulting to 0 if unavailable.
 
-update_q_value(state, action, old_q, reward, future_rewards) applies the Q-learning formula to update the state-action Q-value.
-
-best_future_reward(state) determines the highest Q-value among all possible actions for the current state.
-
-choose_action(state, epsilon=False) implements epsilon-greedy decision-making, balancing exploration and exploitation.
+# Explanation:
+# get_q_value(state, action) retrieves the Q-value for a given (state, action) pair, defaulting to 0 if unavailable.
+# 
+# update_q_value(state, action, old_q, reward, future_rewards) applies the Q-learning formula to update the state-action Q-value.
+# 
+# best_future_reward(state) determines the highest Q-value among all possible actions for the current state.
+# 
+# choose_action(state, epsilon=False) implements epsilon-greedy decision-making, balancing exploration and exploitation.
