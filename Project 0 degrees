@@ -26,49 +26,4 @@ def shortest_path(source, target):
     # If no path is found, return None
     return None
     
-How It Works:
-Queue Initialization: The queue starts with a list containing (None, source), allowing us to track the path.
 
-Breadth-First Search:
-
-Paths are explored level by level to ensure the shortest path is found.
-
-If we reach target, we return the path (excluding the initial placeholder).
-
-Tracking Explored Nodes: Prevents unnecessary cycles in the search.
-
-Path Expansion: Adds unexplored neighbors into the queue for further processing.
-
-Why BFS?
-BFS guarantees that the first time we reach the target, we have the shortest path.
-
-It efficiently finds connections in networks like movie star graphs.
-
-This should work efficiently to find connections between actors based on shared movies. Let me know if you’d like [refinements!(url)](url) deque
-
-def shortest_path(source, target):
-    """Return the shortest path from source to target using BFS."""
-    # Initialize queue with starting node (source)
-    queue = deque([[(None, source)]])  # Path format: [(movie_id, person_id)]
-    explored = set()
-
-    while queue:
-        path = queue.popleft()  # Get the first path in queue
-        last_movie, last_person = path[-1]
-
-        # If we reached the target, return the path excluding the initial placeholder (None, source)
-        if last_person == target:
-            return path[1:]
-
-        # Mark this person as explored
-        explored.add(last_person)
-
-        # Expand neighbors
-        for movie_id, neighbor_id in neighbors_for_person(last_person):
-            if neighbor_id not in explored:
-                new_path = path + [(movie_id, neighbor_id)]
-                queue.append(new_path)
-
-    # If no path is found, return None
-    return None
-    
