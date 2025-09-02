@@ -80,9 +80,4 @@ def iterate_pagerank(corpus, damping_factor, tolerance=0.001):
             return new_ranks
 
         ranks = new_ranks
-How It Works:
-transition_model: Generates probability distributions for the next page visit.
 
-sample_pagerank: Uses random surfer simulations to estimate PageRank.
-
-iterate_pagerank: Applies the iterative approach to compute exact PageRank values.
