@@ -7,14 +7,14 @@ def player(board):
 2. Actions Function
 Find all available moves.
 
-python
+py
 def actions(board):
     """Returns a set of possible actions (i, j) for the given board."""
     return {(i, j) for i in range(3) for j in range(3) if board[i][j] is None}
 3. Result Function
 Return the new board after making a move.
 
-python
+py
 import copy
 
 def result(board, action):
@@ -28,7 +28,7 @@ def result(board, action):
 4. Winner Function
 Check for a winner.
 
-python
+py
 def winner(board):
     """Returns the winner (X or O) if there is one, else None."""
     for i in range(3):
@@ -46,14 +46,14 @@ def winner(board):
 5. Terminal Function
 Check if the game is over.
 
-python
+py
 def terminal(board):
     """Returns True if the game is over, else False."""
     return winner(board) is not None or all(cell is not None for row in board for cell in row)
 6. Utility Function
 Assign values to terminal states.
 
-python
+py
 def utility(board):
     """Returns the utility value: 1 if X wins, -1 if O wins, 0 if tie."""
     game_winner = winner(board)
@@ -61,7 +61,7 @@ def utility(board):
 7. Minimax Function
 Find the optimal move.
 
-python
+py
 def minimax(board):
     """Returns the optimal move (i, j) using Minimax algorithm."""
     if terminal(board):
