@@ -1,12 +1,18 @@
+py
+
 def player(board):
     """Returns the player who has the next turn (X or O)."""
     X_count = sum(row.count("X") for row in board)
     O_count = sum(row.count("O") for row in board)
     return "X" if X_count == O_count else "O"
 
+py
+
 def actions(board):
     """Returns a set of possible actions (i, j) for the given board."""
     return {(i, j) for i in range(3) for j in range(3) if board[i][j] is None}
+
+py
 
 import copy
 
@@ -17,6 +23,8 @@ def result(board, action):
     new_board = copy.deepcopy(board)
     new_board[action[0]][action[1]] = player(board)
     return new_board
+
+py
 
 def winner(board):
     """Returns the winner (X or O) if there is one, else None."""
@@ -31,14 +39,20 @@ def winner(board):
         return board[0][2]  # Diagonal win
     return None
 
+py
+
 def terminal(board):
     """Returns True if the game is over, else False."""
     return winner(board) is not None or all(cell is not None for row in board for cell in row)
+
+py
 
 def utility(board):
     """Returns the utility value: 1 if X wins, -1 if O wins, 0 if tie."""
     game_winner = winner(board)
     return 1 if game_winner == "X" else -1 if game_winner == "O" else 0
+
+py
 
 def minimax(board):
     """Returns the optimal move (i, j) using Minimax algorithm."""
