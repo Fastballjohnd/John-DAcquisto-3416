@@ -49,4 +49,7 @@ def np_chunk(tree):
 
     return chunks
             
-            
+     Added preprocessing function to tokenize and clean sentences. Introduced non-terminal definitions and a function to extract NP chunks from a tree.
+
+none
+
