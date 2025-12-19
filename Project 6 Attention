@@ -1,31 +1,52 @@
-1. get_mask_token_index
-Retrieve the index of the mask token in a tokenized input sequence.
+def preprocess(sentence):
+    """
+    Convert `sentence` to a list of words.
+    - Tokenize using nltk.word_tokenize
+    - Lowercase all words
+    - Exclude tokens with no alphabetic characters
+    """
+    import nltk
 
-def get_mask_token_index(mask_token_id, inputs):
-    """Return the index of the mask token in the input sequence."""
-    try:
-        return inputs.input_ids.index(mask_token_id)
-    except ValueError:
-        return None
-        
-        2. get_color_for_attention_score
-Map an attention score (0 to 1) to an RGB grayscale color.
+    tokens = nltk.word_tokenize(sentence)
+    words = []
 
-def get_color_for_attention_score(attention_score):
-    """Convert attention score into grayscale RGB values."""
-    shade = int(round(255 * attention_score))
-    return (shade, shade, shade)
-    
-    3. visualize_attentions
-Generate diagrams for all attention heads across layers.
+    for token in tokens:
+        token_lower = token.lower()
+        # Keep only tokens with at least one alphabetic character
+        if any(c.isalpha() for c in token_lower):
+            words.append(token_lower)
 
-def visualize_attentions(tokens, attentions):
-    """Generate diagrams for all attention heads across layers."""
-    num_layers = len(attentions)
-    num_heads = attentions[0].shape[2]
+    return words
+NONTERMINALS = r"""
+S -> NP VP | S Conj S | VP
 
-    for layer_index in range(num_layers):
-        for head_index in range(num_heads):
-            generate_diagram(layer_index + 1, head_index + 1, tokens, attentions[layer_index][0][head_index])
+NP -> N | Det N | Det AP N | AP N | NP PP
+
+AP -> Adj | Adj AP
+
+PP -> P NP
+
+VP -> V | V NP | V PP | Adv VP | VP Adv
+
+"""
+def np_chunk(tree):
+    """
+    Return a list of NP subtrees that do NOT contain other NP subtrees.
+    """
+    chunks = []
+
+    for subtree in tree.subtrees():
+        # Check if this subtree is an NP
+        if subtree.label() == "NP":
+            # Check if it contains any smaller NP inside it
+            has_inner_np = any(
+                child.label() == "NP"
+                for child in subtree.subtrees()
+                if child is not subtree
+            )
+            if not has_inner_np:
+                chunks.append(subtree)
+
+    return chunks
             
             
